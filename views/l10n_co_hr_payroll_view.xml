@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hr_contract_view_form" model="ir.ui.view">
+        <field name="name">hr.contract.form</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='wage']" position="after">
+                <label for="eps" />
+                <div class="o_row">
+                    <field name="eps" nolabel="1" />
+                </div>
+                <label for="caja_compensacion" />
+                <div class="o_row">
+                    <field name="caja_compensacion" nolabel="1" />
+                </div>
+                <label for="fondo_pension" />
+                <div class="o_row">
+                    <field name="fondo_pension" nolabel="1" />
+                </div>
+                <label for="aseguradora_riesgo" />
+                <div class="o_row">
+                    <field name="aseguradora_riesgo" nolabel="1" />
+                </div>
+                <label for="clase_riesgo" />
+                <div class="o_row">
+                    <field name="clase_riesgo" nolabel="1" />
+                </div>
+                <label for="rodamiento" />
+                <div class="o_row">
+                    <field name="rodamiento" nolabel="1" />
+                </div>
+                <label for="porcentaje_comision" />
+                <div class="o_row">
+                    <field name="porcentaje_comision" nolabel="1" />
+                </div>
+                <label for="comision_es_prestacional" />
+                <div class="o_row">
+                    <field name="comision_es_prestacional" nolabel="1" />
+                </div>
+                <label for="bono_es_prestacional" />
+                <div class="o_row">
+                    <field name="bono_es_prestacional" nolabel="1" />
+                </div>
+                <label for="rodamiento_es_prestacional" />
+                <div class="o_row">
+                    <field name="rodamiento_es_prestacional" nolabel="1" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_form__l10n_co_view_for" model="ir.ui.view">
+        <field name="name">hr.employee.inherit.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2" />
+        <field name="priority">30</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vehicle']" position="after">
+                <field name="resident_bool" eval="False" />
+            </xpath>
+            <xpath expr="//field[@name='marital']" position="after">
+                <field name="spouse_fiscal_status" attrs="{'invisible': [('marital', 'not in', ['married', 'cohabitant'])], 'required': [('marital', 'in', ['married', 'cohabitant'])]}" colspan="1" help="if spouse has professionnel income or not" />
+                <field name="disabled_spouse_bool" attrs="{'invisible': [('marital', 'not in', ['married', 'cohabitant'])]}" colspan="1" />
+            </xpath>
+            <xpath expr="//field[@name='gender']" position="after">
+                <field name="disabled" />
+            </xpath>
+            <xpath expr="//field[@name='children']" position="after">
+                <field name="disabled_children_bool" />
+                <field name="disabled_children_number" attrs="{'invisible':[('disabled_children_bool','!=',True)]}" colspan="1" help="number of dependent children declared as disabled" />
+                <field name="dependent_children" invisible="1" />
+                <field name="other_dependent_people" groups="hr.group_hr_user" />
+                <field name="other_senior_dependent" attrs="{'invisible':[('other_dependent_people','!=',True)]}" />
+                <field name="other_disabled_senior_dependent" attrs="{'invisible':[('other_dependent_people','!=',True)]}" />
+                <field name="other_juniors_dependent" attrs="{'invisible':[('other_dependent_people','!=',True)]}" />
+                <field name="other_disabled_juniors_dependent" attrs="{'invisible':[('other_dependent_people','!=',True)]}" />
+            </xpath>
+            <xpath expr="//field[@name='spouse_fiscal_status']" position="after">
+                <field name="spouse_net_revenue" attrs="{'invisible': ['|', ('marital', 'not in', ['married', 'cohabitant']), ('spouse_fiscal_status', '!=', 'with income')]}" />
+                <field name="spouse_other_net_revenue" attrs="{'invisible': ['|', ('marital', 'not in', ['married', 'cohabitant']), ('spouse_fiscal_status', '!=', 'with income')]}" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
